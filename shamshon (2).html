@@ -1,0 +1,901 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Happy Birthday</title>
+    <!-- الخطوط اختيارية: لو مفيش إنترنت بيستخدم خطوط الجهاز تلقائياً -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Sriracha&family=Titan+One&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --pink: #feecea;
+        --white: #fff;
+        --black: #333;
+        --accent: #ff7882;
+        --f-title: "Titan One", "Arial Black", Impact, sans-serif;
+        --f-fun: "Sriracha", "Comic Sans MS", "Segoe Print", cursive;
+        --f-script:
+          "Dancing Script", "Segoe Script", "Brush Script MT", cursive;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        background: var(--pink);
+        font-size: 16px;
+      }
+
+      /* ===== الصفحة بمقاس تليفون ===== */
+      #wrapper {
+        position: relative;
+        isolation: isolate;
+        width: 100%;
+        max-width: 430px;
+        height: 100vh;
+        height: 100dvh;
+        margin: 0 auto;
+        overflow: hidden;
+        background-size: 60px 60px;
+        background-image:
+          linear-gradient(
+            0deg,
+            transparent 24%,
+            #fff 25%,
+            #fff 26%,
+            transparent 27%,
+            transparent 74%,
+            #fff 75%,
+            #fff 76%,
+            transparent 77%
+          ),
+          linear-gradient(
+            90deg,
+            transparent 24%,
+            #fff 25%,
+            #fff 26%,
+            transparent 27%,
+            transparent 74%,
+            #fff 75%,
+            #fff 76%,
+            transparent 77%
+          );
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.12);
+      }
+
+      /* ===== أنيميشن مشترك ===== */
+      @keyframes pop {
+        0% {
+          transform: scale(0);
+        }
+        10% {
+          transform: scale(1.3);
+        }
+        20% {
+          transform: scale(0.7);
+        }
+        30%,
+        100% {
+          transform: scale(1);
+        }
+      }
+      .pop {
+        transform: scale(0);
+        animation: pop 3s var(--t, 15s) forwards ease-in-out;
+      }
+
+      .heart {
+        display: inline-block;
+        color: var(--accent);
+        text-shadow: 0 0 6px var(--accent);
+        animation: beat 1s infinite linear;
+      }
+      @keyframes beat {
+        50% {
+          transform: scale(1.2);
+        }
+      }
+
+      /* ===== الزينة العلوية ===== */
+      .bunting {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 90px;
+        pointer-events: none;
+        transform: translateY(-120px);
+        animation: bunting-down 1.5s 1s forwards;
+      }
+      @keyframes bunting-down {
+        to {
+          transform: translateY(0);
+        }
+      }
+
+      /* ===== المحتوى ===== */
+      .content {
+        position: relative;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: clamp(80px, 14dvh, 115px) 16px 16px;
+        gap: 14px;
+      }
+
+      .title {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        font-family: var(--f-title);
+        font-size: clamp(1.8rem, 9.5vw, 2.6rem);
+        letter-spacing: 2px;
+      }
+      .title h1 {
+        display: flex;
+        justify-content: center;
+        line-height: 1.15;
+        text-shadow:
+          3px 3px var(--black),
+          -3px 3px var(--black),
+          3px -3px var(--black),
+          -3px -3px var(--black),
+          3px 6px 0 var(--black);
+      }
+      .happy {
+        color: var(--white);
+      }
+      .birthday {
+        color: var(--accent);
+      }
+      .title h1 span {
+        opacity: 0;
+        transform: translateY(50px);
+        animation: letter-in 0.5s var(--t) forwards;
+      }
+      @keyframes letter-in {
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      .hat {
+        position: absolute;
+        width: 64px;
+        right: 10px;
+        top: -250px;
+        transform: rotate(-40deg);
+        z-index: -1;
+        animation: hat-drop 4s 7s forwards ease;
+      }
+      @keyframes hat-drop {
+        20%,
+        30% {
+          top: -52px;
+          transform-origin: left;
+          transform: rotate(-40deg);
+        }
+        35%,
+        100% {
+          top: -52px;
+          transform: rotate(0deg);
+        }
+      }
+
+      /* التاريخ والاسم */
+      .date,
+      .name {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background: var(--accent);
+        border: 3px solid var(--black);
+        border-radius: 50px;
+        font-family: var(--f-fun);
+      }
+      .date span,
+      .name span {
+        font-weight: bold;
+        margin: 0 14px;
+      }
+      .date {
+        width: 0;
+        height: 0;
+        opacity: 0;
+        overflow: hidden;
+        animation: date-open 5s 9s forwards;
+      }
+      .date .star-i {
+        color: var(--black);
+      }
+      @keyframes date-open {
+        20%,
+        40% {
+          opacity: 1;
+          width: 0;
+          height: 0;
+        }
+        45% {
+          opacity: 1;
+          width: 220px;
+          height: 0;
+        }
+        50%,
+        100% {
+          opacity: 1;
+          width: 220px;
+          height: 42px;
+        }
+      }
+      .name {
+        position: absolute;
+        left: 50%;
+        bottom: -20px;
+        translate: -50% 0;
+        padding: 2px 14px;
+        white-space: nowrap;
+        font-family: var(--f-script);
+      }
+      .name span {
+        font-size: 1.4rem;
+      }
+
+      /* الصورة */
+      .photo-box {
+        position: relative;
+        margin: 6px 0 26px;
+        transform: translateY(100vh);
+        animation: rise 8s 7s forwards ease-in;
+      }
+      @keyframes rise {
+        to {
+          transform: none;
+        }
+      }
+      .photo {
+        --size: min(62vw, 36dvh, 250px);
+        position: relative;
+        width: var(--size);
+        height: var(--size);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 5px solid var(--black);
+        background: radial-gradient(circle at 35% 30%, #fff, #ffc9ce);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .photo .fallback {
+        font-size: calc(var(--size) * 0.5);
+      }
+      .photo img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .balloon {
+        position: absolute;
+        width: 48px;
+        height: 88px;
+      }
+      .balloon-1 {
+        top: -52px;
+        left: -40px;
+        transform-origin: bottom right;
+        animation: sway-1 2s infinite linear;
+      }
+      .balloon-2 {
+        top: 90px;
+        right: -38px;
+        z-index: -1;
+        transform-origin: bottom left;
+        animation: sway-2 2s infinite linear;
+      }
+      @keyframes sway-1 {
+        25% {
+          transform: rotate(3deg);
+        }
+        75% {
+          transform: rotate(-3deg);
+        }
+      }
+      @keyframes sway-2 {
+        0%,
+        50%,
+        100% {
+          transform: rotate(10deg);
+        }
+        25% {
+          transform: rotate(7deg);
+        }
+        75% {
+          transform: rotate(13deg);
+        }
+      }
+
+      /* الدائرة الدوارة */
+      .circle {
+        position: absolute;
+        top: -36px;
+        right: -30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .circle-text {
+        width: 80px;
+        height: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: var(--accent);
+        border: 4px solid var(--black);
+        border-radius: 50%;
+        animation: spin 5s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .circle-text span {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: rotate(calc(var(--i) * 24deg));
+        transform-origin: 0 36px;
+        font: 0.6rem var(--f-fun);
+        text-transform: uppercase;
+        color: var(--black);
+      }
+      .circle .heart {
+        position: absolute;
+        font-size: 1.3rem;
+        color: #fff;
+        text-shadow: none;
+      }
+
+      /* الزرار */
+      #open-card {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 22px;
+        font: 1.05rem var(--f-fun);
+        background: var(--accent);
+        border: 3px solid var(--black);
+        border-radius: 50px;
+        cursor: pointer;
+        z-index: 2;
+      }
+      #open-card:active {
+        transform: scale(0.92);
+      }
+
+      /* نجوم وزينة */
+      .star {
+        position: absolute;
+        width: var(--s);
+        height: var(--s);
+        background: var(--black);
+        clip-path: polygon(
+          0 50%,
+          35% 35%,
+          50% 0,
+          65% 35%,
+          100% 50%,
+          65% 65%,
+          50% 100%,
+          35% 65%
+        );
+        animation:
+          pop 3s var(--t) forwards,
+          twinkle 2s 16s infinite ease-in-out;
+      }
+      @keyframes twinkle {
+        25% {
+          transform: scale(0.8);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+      }
+      .deco {
+        position: absolute;
+        font-size: 22px;
+        line-height: 1;
+      }
+      .deco.big {
+        font-size: 44px;
+      }
+      .deco-bottom {
+        position: absolute;
+        right: 8px;
+        bottom: 6px;
+        font-size: 40px;
+      }
+
+      /* ===== الكارت ===== */
+      .card-overlay {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.8);
+        opacity: 0;
+        visibility: hidden;
+        transform: scale(0.3);
+        transition: all 0.5s;
+        z-index: 1000;
+      }
+      .card-overlay.active {
+        opacity: 1;
+        visibility: visible;
+        transform: scale(1);
+      }
+      #close-card {
+        position: fixed;
+        top: 0;
+        right: 0;
+        padding: 12px 22px;
+        font-size: 28px;
+        color: #fff;
+        cursor: pointer;
+        z-index: 2;
+        background: none;
+        border: 0;
+      }
+
+      .card {
+        position: relative;
+        width: min(88vw, 340px);
+        height: min(80dvh, 560px);
+        perspective: 1500px;
+        cursor: pointer;
+        filter: drop-shadow(0 0 10px var(--accent));
+      }
+      .card-front,
+      .card-inside {
+        position: absolute;
+        inset: 0;
+        border-radius: 14px;
+        background: var(--accent);
+        color: #fff;
+      }
+
+      .card-front {
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        background: linear-gradient(160deg, var(--accent), #ff9aa2);
+        border: 2px solid #fff;
+        transform-origin: top;
+        backface-visibility: hidden;
+        transition: transform 1s ease-in-out;
+      }
+      .card.open .card-front {
+        transform: rotateX(180deg);
+        pointer-events: none;
+      }
+
+      .avatar {
+        position: relative;
+        width: 80px;
+        height: 80px;
+        margin-bottom: 10px;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        overflow: hidden;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 38px;
+      }
+      .avatar img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .card-front h4 {
+        font: 1.1rem var(--f-fun);
+      }
+      .card-front h3 {
+        font: 38px/1.3 var(--f-script);
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        transform: rotate(-5deg);
+        text-shadow:
+          0 0 5px #fff,
+          0 0 10px #fff;
+      }
+      .tap {
+        margin-top: 8px;
+        font: 0.85rem var(--f-fun);
+        opacity: 0.9;
+        animation: beat 1.4s infinite;
+      }
+
+      .card-inside {
+        padding: 22px 20px;
+        overflow-y: auto;
+        box-shadow: inset 0 0 0 2px #fff;
+      }
+      .card-inside > * {
+        opacity: 0;
+        transition: opacity 0.8s;
+      }
+      .card.open .card-inside > * {
+        opacity: 1;
+        transition-delay: 0.7s;
+      }
+      .card.open .card-inside h2 {
+        transition-delay: 1.4s;
+      }
+      .card-inside h3 {
+        text-align: center;
+        font: 28px var(--f-script);
+        margin-bottom: 12px;
+        text-shadow: 0 0 8px var(--accent);
+      }
+      .card-inside h2 {
+        font: 15px/1.8 var(--f-script);
+        text-align: start;
+        white-space: pre-line;
+      }
+      .cute2 {
+        position: absolute;
+        top: 8px;
+        right: 12px;
+        font-size: 26px;
+        animation: wiggle 1s infinite linear;
+      }
+      @keyframes wiggle {
+        25% {
+          transform: rotate(8deg);
+        }
+        75% {
+          transform: rotate(-8deg);
+        }
+      }
+
+      @media (max-height: 600px) {
+        .content {
+          gap: 8px;
+        }
+        .title {
+          font-size: 1.9rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="wrapper">
+      <svg
+        class="bunting"
+        id="bunting"
+        viewBox="0 0 430 90"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      ></svg>
+
+      <div class="content">
+        <div class="title">
+          <h1 class="happy" id="t-happy"></h1>
+          <h1 class="birthday" id="t-birthday"></h1>
+          <svg class="hat" viewBox="0 0 80 96" aria-hidden="true">
+            <polygon
+              points="40,10 8,84 72,84"
+              fill="#FF7882"
+              stroke="#333"
+              stroke-width="4"
+              stroke-linejoin="round"
+            />
+            <polygon
+              points="30,34 50,34 56,50 24,50"
+              fill="#fff"
+              opacity=".85"
+            />
+            <polygon
+              points="19,62 61,62 66,74 14,74"
+              fill="#fff"
+              opacity=".85"
+            />
+            <ellipse
+              cx="40"
+              cy="86"
+              rx="36"
+              ry="7"
+              fill="#fff"
+              stroke="#333"
+              stroke-width="4"
+            />
+            <circle
+              cx="40"
+              cy="9"
+              r="8"
+              fill="#fff"
+              stroke="#333"
+              stroke-width="4"
+            />
+          </svg>
+        </div>
+
+        <div class="date" id="date"><span></span></div>
+
+        <div class="photo-box">
+          <div class="photo" id="photo"><span class="fallback">🎂</span></div>
+          <div class="name">
+            <span class="heart">♥</span><span id="name-text"></span
+            ><span class="heart">♥</span>
+          </div>
+
+          <svg class="balloon balloon-1" viewBox="0 0 48 88" aria-hidden="true">
+            <path
+              d="M24 56 Q18 68 26 76 Q32 82 24 88"
+              fill="none"
+              stroke="#333"
+              stroke-width="2"
+            />
+            <ellipse
+              cx="24"
+              cy="26"
+              rx="20"
+              ry="25"
+              fill="#FF7882"
+              stroke="#333"
+              stroke-width="3"
+            />
+            <ellipse cx="16" cy="16" rx="5" ry="8" fill="#fff" opacity=".5" />
+            <polygon
+              points="24,50 19,58 29,58"
+              fill="#FF7882"
+              stroke="#333"
+              stroke-width="2"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <svg class="balloon balloon-2" viewBox="0 0 48 88" aria-hidden="true">
+            <path
+              d="M24 56 Q30 68 22 76 Q16 82 24 88"
+              fill="none"
+              stroke="#333"
+              stroke-width="2"
+            />
+            <ellipse
+              cx="24"
+              cy="26"
+              rx="20"
+              ry="25"
+              fill="#ffd36b"
+              stroke="#333"
+              stroke-width="3"
+            />
+            <ellipse cx="16" cy="16" rx="5" ry="8" fill="#fff" opacity=".5" />
+            <polygon
+              points="24,50 19,58 29,58"
+              fill="#ffd36b"
+              stroke="#333"
+              stroke-width="2"
+              stroke-linejoin="round"
+            />
+          </svg>
+
+          <div class="circle pop" style="--t: 15s">
+            <div class="circle-text" id="circle-text"></div>
+            <span class="heart">♥</span>
+          </div>
+        </div>
+
+        <button id="open-card" class="pop" style="--t: 16s">
+          <span id="btn-text"></span> <span>✉️</span>
+        </button>
+      </div>
+
+      <!-- زينة -->
+      <div
+        class="star pop"
+        style="--t: 2s; --s: 16px; top: 12%; left: 8%"
+      ></div>
+      <div
+        class="star pop"
+        style="--t: 2.2s; --s: 14px; top: 8%; right: 10%"
+      ></div>
+      <div
+        class="star pop"
+        style="--t: 2.4s; --s: 12px; top: 42%; left: 6%"
+      ></div>
+      <div
+        class="star pop"
+        style="--t: 2.6s; --s: 16px; bottom: 8%; left: 8%"
+      ></div>
+      <div
+        class="star pop"
+        style="--t: 2.8s; --s: 14px; bottom: 22%; right: 8%"
+      ></div>
+
+      <span class="deco pop" style="--t: 2s; top: 40%; left: 3%">🌸</span>
+      <span class="deco pop" style="--t: 2.3s; top: 47%; right: 3%">🌸</span>
+      <span class="deco pop" style="--t: 2.6s; bottom: 18%; left: 30%">🌸</span>
+      <span class="deco big pop" style="--t: 15s; bottom: 14px; left: 14%"
+        >😊</span
+      >
+      <span class="deco-bottom">🎁</span>
+
+      <!-- الكارت: اضغط عليه عشان يتفتح -->
+      <div class="card-overlay" id="overlay">
+        <button id="close-card" aria-label="close">✕</button>
+        <div class="card" id="card">
+          <div class="card-front">
+            <div class="avatar" id="avatar"><span>🎂</span></div>
+            <h4 id="card-to"></h4>
+            <h3 id="card-front-title"></h3>
+            <p class="tap">tap to open</p>
+          </div>
+          <div class="card-inside">
+            <h3 id="card-inside-title"></h3>
+            <h2 id="card-message" dir="auto"></h2>
+            <span class="cute2">🎈</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // =====================================================
+      //  عدّل هنا بس: كل النصوص والصورة في مكان واحد
+      // =====================================================
+      const CONFIG = {
+        name: "Faroha", // الاسم تحت الصورة
+        date: "7 Dec", // التاريخ
+        photo: "unnamed1.png", // صورتك (لو مش موجودة بيظهر 🎂)
+        buttonText: "Click Here",
+        cardTo: "To: Farohty 💖",
+        cardFront: "Happy",
+        cardInside: "To You!",
+        message: `حقيقي حاسس إن إحنا عارفين بعض بقالنا سنين مش شهور. وجودك في حياتي خلاني أحب تفاصيل صغيرة كنت عادي بتعدي عليا، وبقيت بستنى كل يوم عشان أعيش معاكي تفاصيل جديدة.
+
+كل يوم بتثبتيلي إنك الإنسانة الوحيدة اللي تستحقي إنك تكوني موجودة معايا، والوحيدة اللي أقدر أكون قدامها ١٠٠٪ من غير خوف ولا قلق.
+
+كل سنة وإنتي طيبة ومنورة حياتي، وعلى طول أنا شايفك بتلمعي في عيني، وعلى طول شايفك أحلى بنوتة. وهفضل أحب كل تفاصيلك وكل حاجة فيكي.
+
+أنا مش بس عايز أعيش معاكي اللحظات الحلوة، أنا عايزك في كل الأيام، في الصعب قبل الحلو، وفي كل مرحلة جاية في حياتنا. ومهما عدى علينا وقت، نفسي نفضل نختار بعض كل يوم من أول وجديد، ونفضل نحب بعض بنفس الشغف والحب.
+
+ربنا يخليكي ليا يا فروحتي ويديمك نعمة في حياتي. وإن شاء الله آخر السنة دي، ودي الأمنية الوحيدة اللي بدعي بيها من ربنا، إن إحنا نتخطب ونبقى قدام أهلنا وصحابنا والناس كلها رافعين راسنا.
+
+بحبك يا فروحتي ❤`, // رسالة الكارت
+        circleText: "happy-birthday-", // 15 حرف بالظبط
+      };
+      // =====================================================
+
+      const $ = (id) => document.getElementById(id);
+
+      // حروف متحركة (span لكل حرف)
+      function splitText(el, text, varName, start, step, unit = "") {
+        [...text].forEach((ch, i) => {
+          const s = document.createElement("span");
+          s.textContent = ch;
+          s.style.setProperty(varName, start + i * step + unit);
+          el.appendChild(s);
+        });
+      }
+
+      // الصورة مع بديل لو الملف مش موجود
+      function addPhoto(container) {
+        const img = new Image();
+        img.alt = "";
+        img.onerror = () => img.remove();
+        img.src = CONFIG.photo;
+        container.appendChild(img);
+      }
+
+      // نصوص
+      splitText($("t-happy"), "Happy", "--t", 2, 0.2, "s");
+      splitText($("t-birthday"), "Birthday", "--t", 3, 0.2, "s");
+      splitText($("circle-text"), CONFIG.circleText, "--i", 1, 1);
+      $("name-text").textContent = CONFIG.name;
+      $("btn-text").textContent = CONFIG.buttonText;
+      $("card-to").textContent = CONFIG.cardTo;
+      $("card-front-title").textContent = CONFIG.cardFront;
+      $("card-inside-title").textContent = CONFIG.cardInside;
+      $("card-message").textContent = CONFIG.message;
+      addPhoto($("photo"));
+      addPhoto($("avatar"));
+
+      // شريط الأعلام (مرسوم بالكود)
+      (function drawBunting() {
+        const svg = $("bunting"),
+          NS = "http://www.w3.org/2000/svg";
+        const colors = [
+          "#FF7882",
+          "#ffffff",
+          "#ffd36b",
+          "#8fd3ff",
+          "#FF7882",
+          "#ffffff",
+          "#ffd36b",
+          "#8fd3ff",
+          "#FF7882",
+        ];
+        const y = (t) => 2 * (1 - t) * t * 46 + 6 * ((1 - t) * (1 - t) + t * t); // منحنى الحبل
+        const line = document.createElementNS(NS, "path");
+        line.setAttribute("d", "M0,6 Q215,86 430,6");
+        line.setAttribute("fill", "none");
+        line.setAttribute("stroke", "#333");
+        line.setAttribute("stroke-width", "3");
+        svg.appendChild(line);
+        colors.forEach((c, i) => {
+          const t = (i + 0.5) / colors.length,
+            x = t * 430,
+            yy = y(t);
+          const tri = document.createElementNS(NS, "polygon");
+          tri.setAttribute(
+            "points",
+            `${x - 18},${yy} ${x + 18},${yy} ${x},${yy + 38}`,
+          );
+          tri.setAttribute("fill", c);
+          tri.setAttribute("stroke", "#333");
+          tri.setAttribute("stroke-width", "3");
+          tri.setAttribute("stroke-linejoin", "round");
+          svg.appendChild(tri);
+        });
+      })();
+
+      // كتابة التاريخ حرف حرف
+      setTimeout(() => {
+        const box = $("date"),
+          span = box.querySelector("span"),
+          text = CONFIG.date;
+        const star = () =>
+          Object.assign(document.createElement("span"), {
+            className: "star-i",
+            textContent: "★",
+          });
+        let i = 0;
+        const timer = setInterval(() => {
+          if (i < text.length) span.textContent += text[i++];
+          else {
+            box.prepend(star());
+            box.append(star());
+            clearInterval(timer);
+          }
+        }, 100);
+      }, 12000);
+
+      // الكارت
+      const overlay = $("overlay"),
+        card = $("card");
+      $("open-card").onclick = () => overlay.classList.add("active");
+      card.onclick = () => card.classList.toggle("open");
+      $("close-card").onclick = () => {
+        overlay.classList.remove("active");
+        card.classList.remove("open");
+      };
+    </script>
+  </body>
+</html>
